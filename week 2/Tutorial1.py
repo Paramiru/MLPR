@@ -15,7 +15,6 @@ def plot_rbf(xx, hh):
         plt.plot(xx, yy)
     plt.show()
 
-
 # plotting code
 N = 70
 hh = 0.1

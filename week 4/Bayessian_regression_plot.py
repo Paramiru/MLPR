@@ -11,7 +11,7 @@ def get_Bayessian_line():
     xx = np.concatenate((xx, ones), axis=1)
     return xx @ ww
 
-def plot_Bayessian_line(number_of_lines=50):
+def plot_Bayessian_lines(number_of_lines=50):
     plt.clf()
     X_grid = np.arange(-5, 5, step=0.01)[:, None]
     for i in range(number_of_lines):
@@ -19,6 +19,6 @@ def plot_Bayessian_line(number_of_lines=50):
         plt.plot(X_grid, yy, label=f'line {i}')
     plt.show()
 
-plot_Bayessian_line()
+plot_Bayessian_lines()
     
 
