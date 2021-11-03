@@ -1,2 +1,2 @@
-# MLPR
-Machine Learning and Pattern Recognition course. Written code to try what being taught.
+# Machine Learning and Pattern Recognition
+[Website](https://mlpr.inf.ed.ac.uk/2021/)
