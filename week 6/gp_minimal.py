@@ -43,7 +43,7 @@ def gauss_kernel_fn(X1, X2, ell, sigma_f):
 
 # Pick some particular parameters for this demo:
 def k_fn(X1, X2):
-    return gauss_kernel_fn(X1, X2, 3.0, 10.0)
+    return gauss_kernel_fn(X1, X2, 1.0, 2.0)
 
 # You could also try:
 # def k_fn(X1, X2):
@@ -74,7 +74,9 @@ X_grid = np.arange(0, 10, 0.02)[:,None]
 # amount of noise to the process (a "jitter" or "nugget" term) if we need a
 # matrix that is positive definite given finite numerical precision.
 N_grid = X_grid.shape[0]
-K_grid = k_fn(X_grid, X_grid) + 1e-9*np.eye(N_grid)
+# Adding an integer to every element in K_grid gives a random offset.
+# Adding an integer to the diagonal of K_grid makes the functions not continuos.
+K_grid = k_fn(X_grid, X_grid) + 1e-9*np.eye(N_grid) + 4*np.eye(N_grid)
 
 # To sample from Gausian with covariance K = L @ L.T,
 # we just multiply L by a vector standard normals:
@@ -104,7 +106,7 @@ L_locs1 = np.linalg.cholesky(K_locs1)
 plt.figure(2)
 plt.clf()
 noise_var = 0.0 # add no noise to the samples, we want to look at function values
-#noise_var = 1.0 # add some noise to the samples, we want to simulate data
+# noise_var = 1.0 # add some noise to the samples, we want to simulate data
 f_locs1 = np.dot(L_locs1, np.random.randn(N_locs1)) + \
         np.sqrt(noise_var)*np.random.randn(N_locs1)
 plt.plot(X_locs1, f_locs1, 'x', markersize=20, markeredgewidth=2)

@@ -21,6 +21,9 @@ def fw_rbf(xx, cc):
 def phi_rbf(Xin):
     return np.hstack([fw_rbf(Xin, -1.5), fw_rbf(Xin, 1), fw_rbf(Xin, 2.5)])    
 
+def create_basis_functions(Xin, centers_of_rbf, h):
+    return np.exp(-(Xin - centers_of_rbf[None,:])**2 / h)
+
 def fit_and_plot(phi_fn, X, yy):
     # phi_fn takes N, inputs and returns N,D basis function values
     w_fit = np.linalg.lstsq(phi_fn(X), yy, rcond=None)[0] # D,
@@ -28,12 +31,28 @@ def fit_and_plot(phi_fn, X, yy):
     f_grid = np.dot(phi_fn(X_grid), w_fit)
     plt.plot(X_grid, f_grid, linewidth=2)
 
-fit_and_plot(phi_linear, X, yy)
-fit_and_plot(phi_quadratic, X, yy)
-fit_and_plot(phi_rbf, X, yy)
-fit_and_plot(phi_general_polynomial, X, yy)
-plt.legend(('data', 'linear', 'quadatic fit', 'rbf fit', '5th order polynomial'))
-plt.xlabel('x')
-plt.ylabel('f')
+# fit_and_plot(phi_linear, X, yy)
+# fit_and_plot(phi_quadratic, X, yy)
+# fit_and_plot(phi_rbf, X, yy)
+# fit_and_plot(phi_general_polynomial, X, yy)
+# plt.legend(('data', 'linear', 'quadatic fit', 'rbf fit', '5th order polynomial'))
+# plt.xlabel('x')
+# plt.ylabel('f')
 
+# plt.show()
+# print(X)
+
+# centres = np.array([1,2,3,4,5])
+# print(create_basis_functions(X, centres, 2))
+# print()
+# print(fw_rbf(X, centres))
+
+def fit_and_plot(X, yy):
+    # phi_fn takes N, inputs and returns N,D basis function values
+    w_fit = np.linalg.lstsq(X, yy, rcond=None)[0] # D,
+    X_grid = np.arange(-1.4, 3.3, 0.01)[:,None] # N,1
+    f_grid = np.dot(X_grid, w_fit)
+    plt.plot(X_grid, f_grid, linewidth=2)
+
+fit_and_plot(X, yy)
 plt.show()
